@@ -65,7 +65,6 @@ mock.onGet('/api/social/feed').reply(200, {
         avatar: '/static/images/avatars/avatar_6.png'
       },
       message: 'Just made this home screen for a project, what-cha thinkin?',
-      media: '/static/images/posts/post_1.png',
       liked: true,
       likes: 24,
       comments: [

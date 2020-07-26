@@ -75,7 +75,7 @@ function CommentAdd({ className, ...rest }) {
         </IconButton>
       </Tooltip>
       <Divider className={classes.divider} />
-      <Tooltip title="Attach image">
+      {/* <Tooltip title="Attach image">
         <IconButton
           edge="end"
           onClick={handleAttach}
@@ -95,7 +95,7 @@ function CommentAdd({ className, ...rest }) {
         className={classes.fileInput}
         ref={fileInputRef}
         type="file"
-      />
+      /> */}
     </div>
   );
 }
