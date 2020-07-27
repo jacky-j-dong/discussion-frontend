@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -16,6 +15,9 @@ import {
 import SendIcon from '@material-ui/icons/Send';
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
+import { getPosts, createPost, addComment } from 'src/actions/socialActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -30,6 +32,9 @@ const useStyles = makeStyles(() => ({
 
 function PostAdd({ className, ...rest }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+
   const fileInputRef = useRef(null);
   const [value, setValue] = useState('');
   const account = useSelector((state) => state.account);
@@ -41,6 +46,21 @@ function PostAdd({ className, ...rest }) {
 
   const handleAttach = () => {
     fileInputRef.current.click();
+  };
+
+  const handleAddPost = async (value) => {
+    console.log('add post: ' + value);
+    try {
+      await dispatch(createPost('', value));
+      enqueueSnackbar('Post created', {
+        variant: 'success'
+      });
+    } catch (error) {
+      enqueueSnackbar('Ooops!', {
+        variant: 'error'
+      });
+    }
+
   };
 
   return (
@@ -68,7 +88,9 @@ function PostAdd({ className, ...rest }) {
             />
           </Paper>
           <Tooltip title="Send">
-            <IconButton color={value.length > 0 ? 'primary' : 'default'}>
+            <IconButton
+              color={value.length > 0 ? 'primary' : 'default'}
+              onClick={() => handleAddPost(value)}>
               <SendIcon />
             </IconButton>
           </Tooltip>

@@ -3,6 +3,9 @@ import React, {
   useEffect,
   useCallback
 } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPosts, createPost, addComment } from 'src/actions/socialActions';
+
 import {
   Box,
   Container,
@@ -28,10 +31,16 @@ function SocialFeedView() {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
   const [posts, setPosts] = useState(null);
+  const dispatch = useDispatch();
+  // const { posts } = useSelector((state) => state.social);
+
+  // useEffect(() => {
+  //   dispatch(getPosts());
+  // }, [dispatch]);
 
   const getPosts = useCallback(() => {
     axios
-      .get('/api/social/feed')
+      .get('/api/posts')
       .then((response) => {
         if (isMountedRef.current) {
           setPosts(response.data.posts);

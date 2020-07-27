@@ -25,14 +25,14 @@ mock.onGet('/api/social/profile').reply(200, {
   }
 });
 
-mock.onGet('/api/social/feed').reply(200, {
+// mock.onGet('/api/social/feed').reply(200, {
+mock.onGet('/api/posts').reply(200, {
   posts: [
     {
       id: '5e887fa38598b6fe61667757',
       author: {
         id: '5e88792be2d4cfb4bf0971d9',
-        name: 'Elliott Stone',
-        avatar: '/static/images/avatars/avatar_10.png'
+        name: 'Elliott Stone'
       },
       message: 'Hey guys! What\'s your favorite framework?',
       liked: true,
@@ -72,8 +72,7 @@ mock.onGet('/api/social/feed').reply(200, {
           id: '5e887fc17162ba254da30771',
           author: {
             id: '5e887b7602bdbc4dbb234b27',
-            name: 'Anje Keizer',
-            avatar: '/static/images/avatars/avatar_5.png'
+            name: 'Anje Keizer'
           },
           message: 'Could use some more statistics, but that’s me haha',
           createdAt: moment()
@@ -85,8 +84,7 @@ mock.onGet('/api/social/feed').reply(200, {
           id: '5e887fc759bebe8d5d54a2e5',
           author: {
             id: '5e887a1fbefd7938eea9c981',
-            name: 'Miller Edwards',
-            avatar: '/static/images/avatars/avatar_8.png'
+            name: 'Miller Edwards'
           },
           message: 'Hmm, honestly this looks nice but I would change the shadow though',
           createdAt: moment()

@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -15,6 +14,9 @@ import {
 import SendIcon from '@material-ui/icons/Send';
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
+import { getPosts, createPost, addComment } from 'src/actions/socialActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -30,11 +32,13 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function CommentAdd({ className, ...rest }) {
+function CommentAdd({ className, post, ...rest }) {
   const classes = useStyles();
   const { user } = useSelector((state) => state.account);
   const fileInputRef = useRef(null);
   const [value, setValue] = useState('');
+  const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (event) => {
     event.persist();
@@ -43,6 +47,21 @@ function CommentAdd({ className, ...rest }) {
 
   const handleAttach = () => {
     fileInputRef.current.click();
+  };
+
+  const handleAddComment = async (value) => {
+    console.log('add comment: ' + value);
+    try {
+      await dispatch(addComment(post.id, '', value));
+      enqueueSnackbar('Comment created', {
+        variant: 'success'
+      });
+    } catch (error) {
+      enqueueSnackbar('Ooops!', {
+        variant: 'error'
+      });
+    }
+
   };
 
   return (
@@ -70,7 +89,9 @@ function CommentAdd({ className, ...rest }) {
         />
       </Paper>
       <Tooltip title="Send">
-        <IconButton color={value.length > 0 ? 'primary' : 'default'}>
+        <IconButton
+          color={value.length > 0 ? 'primary' : 'default'}
+          onClick={() => handleAddComment(value)}>
           <SendIcon />
         </IconButton>
       </Tooltip>

@@ -113,7 +113,7 @@ function PostCard({ className, post, ...rest }) {
           <Box my={2}>
             <Divider />
           </Box>
-          <CommentAdd />
+          <CommentAdd post={post} />
         </Box>
       </Card>
       {openedFile && (
